@@ -613,7 +613,7 @@ class Bond(Edge):
                 self.atom1.number if self.atom1 is not None else 0,
                 self.atom2.number if self.atom2 is not None else 0)
 
-    def get_bde(self):
+    def get_bde(self, metal='Pt111'):
         """
         estimate the bond dissociation energy in J/mol of the bond based on the order of the bond
         and the atoms involved in the bond
@@ -621,6 +621,22 @@ class Bond(Edge):
         try:
             return bdes[(self.atom1.element.symbol, self.atom2.element.symbol, self.order)]
         except KeyError:
+            if (self.atom1.is_surface_site()) or (self.atom2.is_surface_site()):
+                if self.atom1.is_surface_site():
+                    add_atom = self.atom2.element.symbol
+                else:
+                    add_atom = self.atom1.element.symbol
+                from rmgpy.data.surface import MetalDatabase
+                from rmgpy import settings
+                from rmgpy.quantity import Quantity
+                MetalDB = MetalDatabase()
+                MetalDB.load(os.path.join(settings['database.directory'], 'surface'))
+                metal_binding_energies = MetalDB.find_binding_energies(metal=metal)
+                binding_energy = metal_binding_energies[add_atom]
+                max_bond_order = {'C': 4., 'O': 2., 'N': 3., 'H': 1.}
+                normalized_bond_order = self.order / max_bond_order[add_atom]
+                binding_energy = Quantity(binding_energy).value_si * normalized_bond_order
+                return -1 * binding_energy
             raise KeyError('Bond Dissociation energy not known for combination: '
                            '({0},{1},{2})'.format(self.atom1.element.symbol, self.atom2.element.symbol, self.order))
 
