@@ -81,6 +81,7 @@ cdef class StickingCoefficient(KineticsModel):
         StickingCoefficient object.
         """
         string = 'StickingCoefficient(A={0!r}, n={1!r}, Ea={2!r}, T0={3!r}'.format(self.A, self.n, self.Ea, self.T0)
+        # if self.Ek is not None: string += ', Ek=({0!r}, {})'
         if self.Tmin is not None: string += ', Tmin={0!r}'.format(self.Tmin)
         if self.Tmax is not None: string += ', Tmax={0!r}'.format(self.Tmax)
         if self.cov is not None:
@@ -362,7 +363,7 @@ cdef class StickingCoefficientBEP(KineticsModel):
         Return the sticking coefficient (dimensionless) at
         temperature `T` in K and enthalpy of reaction `dHrxn` in J/mol. 
         """
-        cdef double A, n, Ea, stickingCoefficient
+        cdef double A, n, Ea, stickingCoefficient  # todo: add in cov here
         Ea = self.get_activation_energy(dHrxn)
         A = self._A.value_si
         n = self._n.value_si
@@ -472,7 +473,7 @@ cdef class SurfaceArrhenius(Arrhenius):
     property A:
         """The preexponential factor. 
     
-        This is the only thing different from a normal Arrhenius class."""
+        This is the only thing different from a normal Arrhenius class."""  # todo: I don't think this is true after adding in cov
         def __get__(self):
             return self._A
         def __set__(self, value):
