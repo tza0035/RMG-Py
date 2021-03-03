@@ -81,7 +81,7 @@ cdef class StickingCoefficient(KineticsModel):
         StickingCoefficient object.
         """
         string = 'StickingCoefficient(A={0!r}, n={1!r}, Ea={2!r}, T0={3!r}'.format(self.A, self.n, self.Ea, self.T0)
-        # if self.Ek is not None: string += ', Ek=({0!r}, {})'
+        if self.cov is not None: string += ', Ek=({0!r}, {})'
         if self.Tmin is not None: string += ', Tmin={0!r}'.format(self.Tmin)
         if self.Tmax is not None: string += ', Tmax={0!r}'.format(self.Tmax)
         if self.cov is not None:
