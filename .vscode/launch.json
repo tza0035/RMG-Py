@@ -4,15 +4,16 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        
         {"name":"Python: Current File","type":"python","request":"launch","program":"${file}","console":"integratedTerminal"},
         {
-            "name": "rmg.py Testing/test_issue456",
+            "name": "rmg.py Test/test_issue456",
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/rmg.py",
             "args": [
-                "/Users/lee.ting/Code/Ammonia/testing/RMG-database_issue/issue456/test/input.py"
+                "/Users/lee.ting/Code/Test/testing/RMG-database_issue/issue456/test/input.py"
             ],
             "console": "integratedTerminal",
             "env": {
@@ -20,13 +21,13 @@
             },
         },
         {
-            "name": "rmg.py Testing/test_Co_BEAzeolite_decomposition",
+            "name": "rmg.py Test/test_libraries/test_Co_BEAzeolite_decomposition",
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}",
             "program": "${workspaceFolder}/rmg.py",
             "args": [
-                "/Users/lee.ting/Code/Ammonia/testing/test_libraries/test_Co_BEAzeolite_decomposition/input.py"
+                "/Users/lee.ting/Code/Test/testing/test_libraries/test_Co_BEAzeolite_decomposition/input.py"
             ],
             "console": "integratedTerminal",
             "env": {
