@@ -533,6 +533,18 @@ class GroupAtom(Vertex):
         site_type = ATOMTYPES['X']
         return all([s.is_specific_case_of(site_type) for s in self.atomtype])
 
+    def is_electron(self):
+        """
+        Return ``True`` if the atom represents a surface site or ``False`` if not.
+        """
+        return self.atomtype[0] == ATOMTYPES['e']
+
+    def is_proton(self):
+        """
+        Return ``True`` if the atom represents a surface site or ``False`` if not.
+        """
+        return self.atomtype[0] == ATOMTYPES['H+']
+
     def is_oxygen(self):
         """
         Return ``True`` if the atom represents an oxygen atom or ``False`` if not.
@@ -1188,6 +1200,14 @@ class Group(Graph):
     def is_surface_site(self):
         """Returns ``True`` iff the group is nothing but a surface site 'X'."""
         return len(self.atoms) == 1 and self.atoms[0].is_surface_site()
+
+    def is_proton(self):
+        """Returns ``True`` iff the group is a proton"""
+        return len(self.atoms) == 1 and self.atoms[0].is_proton()
+
+    def is_electron(self):
+        """Returns ``True`` iff the group is an electron"""
+        return len(self.atoms) == 1 and self.atoms[0].is_electron()
 
     def remove_atom(self, atom):
         """
