@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
     branches:
-      - master
+      - halogens_kinetics
     types: [opened, synchronize, reopened, ready_for_review, review_requested]
 jobs:
   build-and-test-linux:
