@@ -68,8 +68,7 @@ def save_output_html(path, reaction_model, part_core_edge='core'):
     dirname = os.path.dirname(path)
 
     # Prepare parameters to pass to jinja template
-    title = 'RMG Output'
-
+    title = 'RMG Output' 
     if part_core_edge == 'core':
         species = reaction_model.core.species[:] + reaction_model.output_species_list
     elif part_core_edge == 'edge':
@@ -126,6 +125,12 @@ def save_output_html(path, reaction_model, part_core_edge='core'):
     families = list(family_count.keys())
     families.sort()
 
+    # site density (will be none if not a surface reaction)
+    if reaction_model.surface_site_density:
+        surface_site_density = reaction_model.surface_site_density.value_si
+    else: 
+        surface_site_density = None
+    
     ## jinja2 filters etc.
     to_remove_from_css_names = re.compile(r'[/.\-+,]')
 
@@ -484,7 +489,7 @@ $(document).ready(function() {
 </tr>
 <tr class="kinetics {{ rxn.get_source()|csssafe }} hide_kinetics">
     <td></td>
-    <td colspan="4">{{ rxn.kinetics.to_html() }}</td>
+    <td colspan="4">{{ rxn.reaction_to_html(surface_site_density) }}</td>
 </tr>
 <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>
@@ -510,7 +515,7 @@ $(document).ready(function() {
     f = open(path, 'w')
     f.write(template.render(title=title, species=species, reactions=reactions, families=families,
                             family_count=family_count, get_species_identifier=get_species_identifier,
-                            textwrap=textwrap))
+                            surface_site_density=surface_site_density, textwrap=textwrap))
     f.close()
 
 
@@ -1245,7 +1250,7 @@ $(document).ready(function() {
     </tr>
     <tr class="kinetics {{ rxn.get_source()|csssafe }}">
         <td></td>
-        <td colspan="4">{{ rxn.kinetics.to_html() }}</td>
+        <td colspan="4">{{ rxn.reaction_to_html(surface_site_density) }}</td>
     </tr>
     <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>
@@ -1279,7 +1284,7 @@ $(document).ready(function() {
     </tr>
     <tr class="kinetics {{ rxn.get_source()|csssafe }}">
         <td></td>
-        <td colspan="4">{{ rxn.kinetics.to_html() }}</td>
+        <td colspan="4">{{ rxn.reaction_to_html(surface_site_density) }}</td>
     </tr>
     <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>

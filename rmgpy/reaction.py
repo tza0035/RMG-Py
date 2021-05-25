@@ -1437,6 +1437,35 @@ class Reaction:
         """
         raise NotImplementedError("generate_high_p_limit_kinetics is not implemented for all Reaction subclasses.")
 
+    def reaction_to_html(self, surface_site_density=None):   
+        """
+        Return an HTML rendering.
+        """
+        if isinstance(self.kinetics, StickingCoefficient):
+
+            Tdata = [500, 1000, 1500, 2000]
+            if surface_site_density is None: 
+                site_density = 0 # 2.483e-09 # use platinum value
+            else: 
+                site_density = surface_site_density
+
+            string = '<table class="KineticsData">\n<tr class="KineticsData_Tdata"><th>T/[K]</th>\n'
+            try:
+                for T in Tdata:
+                    string += '<td>{0:.0f}</td>'.format(T)
+
+                string += '\n</tr><tr class="KineticsData_kdata"><th>log<sub>10</sub>(k/[mole,m,s])\n    '
+
+                for T in Tdata:
+                    string += '<td>{0:+.1f}</td>'.format(np.log10(self.get_rate_coefficient(T=T, surface_site_density=site_density)))
+            except:
+                string += '<td>An error occurred in processing kinetics</td>'
+            string += '\n</tr></table>'
+            string += "<span class='KineticsData_repr'>{0!r}</span>".format(self.kinetics)
+
+        else:
+            string = self.kinetics.to_html()
+        return string
 
 def same_species_lists(list1, list2, check_identical=False, only_check_label=False, generate_initial_map=False,
                        strict=True, save_order=False):
