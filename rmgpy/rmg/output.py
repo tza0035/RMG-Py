@@ -129,7 +129,7 @@ def save_output_html(path, reaction_model, part_core_edge='core'):
     if reaction_model.surface_site_density:
         surface_site_density = reaction_model.surface_site_density.value_si
     else: 
-        surface_site_density = None
+        surface_site_density = 0
     
     ## jinja2 filters etc.
     to_remove_from_css_names = re.compile(r'[/.\-+,]')
@@ -489,7 +489,7 @@ $(document).ready(function() {
 </tr>
 <tr class="kinetics {{ rxn.get_source()|csssafe }} hide_kinetics">
     <td></td>
-    <td colspan="4">{{ rxn.reaction_to_html(surface_site_density) }}</td>
+    <td colspan="4">{{ rxn.kinetics_to_html(surface_site_density) }}</td>
 </tr>
 <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>
@@ -1250,7 +1250,7 @@ $(document).ready(function() {
     </tr>
     <tr class="kinetics {{ rxn.get_source()|csssafe }}">
         <td></td>
-        <td colspan="4">{{ rxn.reaction_to_html(surface_site_density) }}</td>
+        <td colspan="4">{{ rxn.kinetics_to_html(surface_site_density) }}</td>
     </tr>
     <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>
@@ -1284,7 +1284,7 @@ $(document).ready(function() {
     </tr>
     <tr class="kinetics {{ rxn.get_source()|csssafe }}">
         <td></td>
-        <td colspan="4">{{ rxn.reaction_to_html(surface_site_density) }}</td>
+        <td colspan="4">{{ rxn.kinetics_to_html(surface_site_density) }}</td>
     </tr>
     <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>

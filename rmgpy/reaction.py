@@ -1437,17 +1437,18 @@ class Reaction:
         """
         raise NotImplementedError("generate_high_p_limit_kinetics is not implemented for all Reaction subclasses.")
 
-    def reaction_to_html(self, surface_site_density=None):   
+    def kinetics_to_html(self, surface_site_density=0):   
         """
-        Return an HTML rendering.
+        Return an HTML rendering of the rate coefficient.
         """
         if isinstance(self.kinetics, StickingCoefficient):
-
+            cython.declare(
+                T=cython.double, 
+                string=str, 
+                Tdata=cython.list
+                )
             Tdata = [500, 1000, 1500, 2000]
-            if surface_site_density is None: 
-                site_density = 0 # 2.483e-09 # use platinum value
-            else: 
-                site_density = surface_site_density
+            site_density = surface_site_density
 
             string = '<table class="KineticsData">\n<tr class="KineticsData_Tdata"><th>T/[K]</th>\n'
             try:
