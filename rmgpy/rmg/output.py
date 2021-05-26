@@ -1250,7 +1250,7 @@ $(document).ready(function() {
     </tr>
     <tr class="kinetics {{ rxn.get_source()|csssafe }}">
         <td></td>
-        <td colspan="4">{{ rxn.kinetics_to_html(surface_site_density) }}</td>
+        <td colspan="4">{{ rxn.kinetics.to_html() }}</td>
     </tr>
     <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>
@@ -1284,7 +1284,7 @@ $(document).ready(function() {
     </tr>
     <tr class="kinetics {{ rxn.get_source()|csssafe }}">
         <td></td>
-        <td colspan="4">{{ rxn.kinetics_to_html(surface_site_density) }}</td>
+        <td colspan="4">{{ rxn.kinetics.to_html() }}</td>
     </tr>
     <tr class="energy {{ rxn.get_source()|csssafe }} hide_energy">
     <td></td>
